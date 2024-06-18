@@ -1,6 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.18;
 
+error AlreadyVoted();
+error NoSuchCandidate();
+error NumberOfCandidatesExceedsThe255();
+error NoCandidatesProvided();
+
 contract VotingSystem {
     struct Candidate {
         uint8 ID;
@@ -13,8 +18,13 @@ contract VotingSystem {
     mapping(address voter => bool voted) internal voters;
 
     constructor(string[] memory candidateNames) {
-        require(candidateNames.length > 0, "At least one candidate must be provided.");
-        require(candidateNames.length < type(uint8).max, "The maximum number of candidates is 255.");
+        if(candidateNames.length == 0){
+            revert NoCandidatesProvided();
+        }
+
+        if(candidateNames.length > type(uint8).max){
+            revert NumberOfCandidatesExceedsThe255();
+        }
 
         for (uint8 i = 0; i < candidateNames.length; i++) {
             candidates.push(Candidate(i, candidateNames[i], 0));
@@ -23,12 +33,20 @@ contract VotingSystem {
 
     event VoteCast(address indexed voter, uint8 indexed candidateID, string candidateName);
 
+    // 26307
     function vote(uint8 candidateID) public {
-        require(candidateID < candidates.length, "There's no such candidate");
-        require(!voters[msg.sender], "You have already voted");
+        if(candidateID < 0 || candidateID >= candidates.length){
+            revert NoSuchCandidate();
+        }
+
+        if(voters[msg.sender]){
+            revert AlreadyVoted();
+        }
         
         Candidate storage candidate = candidates[candidateID];
-        require(bytes(candidate.name).length > 0, "There's no such candidate");
+        if(bytes(candidate.name).length == 0){
+            revert NoSuchCandidate();
+        }
 
         candidate.votes++;
         voters[msg.sender] = true;
