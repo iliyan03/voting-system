@@ -3,8 +3,28 @@ let web3;
 let votingSystem;
 let accounts;
 
-const contractAddress = '0xd34ED04199a2fa44790d081676510Df0a784b95b';
+const contractAddress = '0xF8FE14121Ce80EeF70bAfD8Cbcd8aB9267B138d2';
 const contractABI = [
+	{
+		"inputs": [],
+		"name": "AlreadyVoted",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "NoCandidatesProvided",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "NoSuchCandidate",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "NumberOfCandidatesExceedsThe255",
+		"type": "error"
+	},
 	{
 		"anonymous": false,
 		"inputs": [
@@ -57,9 +77,9 @@ const contractABI = [
 	{
 		"inputs": [
 			{
-				"internalType": "uint8",
-				"name": "ID",
-				"type": "uint8"
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
 			}
 		],
 		"name": "candidates",
@@ -108,19 +128,6 @@ const contractABI = [
 				"internalType": "struct VotingSystem.Candidate[]",
 				"name": "",
 				"type": "tuple[]"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "numOfCandidates",
-		"outputs": [
-			{
-				"internalType": "uint8",
-				"name": "",
-				"type": "uint8"
 			}
 		],
 		"stateMutability": "view",
