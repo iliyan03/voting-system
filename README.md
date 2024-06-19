@@ -1,66 +1,39 @@
-## Foundry
+# Simple Voting System Smart Contract
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+This project is a beginner-friendly smart contract that implements a simple voting system. The contract allows users to vote for candidates in an election, ensuring that each user can vote only once and keeping track of the number of votes each candidate receives.
 
-Foundry consists of:
+## Objective
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+Create a decentralized application (DApp) that facilitates a transparent and secure voting process using blockchain technology.
 
-## Documentation
+## Key Components
 
-https://book.getfoundry.sh/
+1. **Candidates**
+   - Store information about each candidate, such as their name and the number of votes they have received.
 
-## Usage
+2. **Voters**
+   - Maintain a record of who has voted to ensure that each user can vote only once.
 
-### Build
+3. **Vote Counting**
+   - Implement a function to handle the voting process, which increments the vote count for the selected candidate.
+   - Ensure the integrity of the voting process by checking if a voter has already voted.
 
-```shell
-$ forge build
-```
+4. **Event Emission**
+   - Emit events to log significant actions, such as when a vote is cast.
 
-### Test
+## Functional Requirements
 
-```shell
-$ forge test
-```
+1. **Add Candidates**
+   - Allow adding candidates during the contract's initialization phase.
+   - Each candidate should have a unique ID for easy reference.
 
-### Format
+2. **Vote for Candidates**
+   - Implement a function to allow users to vote for a candidate by specifying the candidate's ID.
+   - Verify if the user has already voted and update the vote count appropriately.
 
-```shell
-$ forge fmt
-```
+3. **Track Votes**
+   - Keep a record of each voter's status (whether they have voted or not).
+   - Update the vote count for the selected candidate.
 
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+4. **Display Results**
+   - Provide a way to query the current vote count for each candidate.
